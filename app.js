@@ -1,188 +1,144 @@
 const questScenario = {
   title: "Банк покупок",
-  brand: "Калык шынык",
   levels: [
     {
       level: 1,
-      name: "Дух входа",
-      description: "Главный вход ТЦ",
-      task: "Найди 3 предмета светло-зелёного цвета.",
+      name: "Уровень 1: Зелёный объект",
+      task: "Сделай фото зелёного объекта.",
       proof: "Фото"
     },
     {
       level: 2,
-      name: "Код предков",
-      description: "Декор на любом этаже",
-      task: "Найди узор, похожий на марийский орнамент, и ответь на вопрос.",
-      proof: "Фото + ответ"
+      name: "Уровень 2: Орнамент",
+      task: "Сделай фото орнамента и ответь на вопрос.",
+      proof: "Фото + ответ",
+      question: "Что символизирует орнамент?",
+      options: ["Защиту", "Путь", "Солнце"]
     },
     {
       level: 3,
-      name: "Живое пространство",
-      description: "Партнёрский магазин",
-      task: "Запиши видео до 10 секунд с фразой «Я в Банке покупок».",
+      name: "Уровень 3: Видео в магазине",
+      task: "Сними короткое видео в магазине.",
       proof: "Видео"
     },
     {
       level: 4,
-      name: "Связь людей",
-      description: "Любая зона ТЦ",
-      task: "Сделай совместное фото с другим участником или гостем.",
+      name: "Уровень 4: Фото с человеком",
+      task: "Сделай фото с другим человеком.",
       proof: "Фото"
     },
     {
       level: 5,
-      name: "Испытание знания",
-      description: "Финальная зона",
-      task: "Ответь: что означает бренд «Калык шынык»?",
-      proof: "Ответ"
+      name: "Уровень 5: Финальный вопрос",
+      task: "Ответь на финальный вопрос.",
+      proof: "Ответ",
+      question: "Что означает бренд «Калык шынык»?",
+      options: ["Народная сила", "Путь народа", "Общая энергия"]
     }
-  ],
-  reward: ["Сумка", "Игрушка", "Украшение", "Открытка"]
+  ]
 };
 
 const translations = {
   ru: {
-    nav: { home: "Главная", shop: "Каталог", quest: "Квест", profile: "Профиль" },
-    subtitle: "Квест и покупки от бренда «Калык шынык»",
-    home: {
-      title: "Добро пожаловать в «Банк покупок»",
-      text: "Купи товар сразу или получи награду бесплатно через квест.",
-      buy: "Купить товар",
-      startQuest: "Пройти квест"
-    },
-    shop: {
-      title: "Каталог",
-      freeHint: "или получи бесплатно через квест",
-      buy: "Купить",
-      payTitle: "Оплата",
-      payDesc: "Если не хочешь проходить квест, выбери способ оплаты.",
-      sber: "Оплатить через SberPay",
-      vtb: "Оплатить через VTB Pay"
-    },
+    nav: { home: "Главная", quest: "Квест", profile: "Профиль" },
+    subtitle: "Пошаговый квест на 5 уровней",
+    home: { title: "Начни квест", cta: "Перейти в квест" },
     quest: {
       title: "Квест",
-      scan: "Сканировать QR",
-      stopScan: "Остановить сканер",
-      upload: "Загрузить фото/видео",
-      complete: "Отметить уровень пройденным",
-      question: "Что символизирует этот знак?",
-      option1: "Защита семьи",
-      option2: "Путь и движение",
-      option3: "Солнце и тепло"
-    },
-    profile: {
-      title: "Профиль",
-      lang: "Язык",
       progress: "Прогресс",
-      reward: "Награда"
-    }
+      prev: "Назад",
+      next: "Следующий уровень",
+      upload: "Загрузить файл",
+      answer: "Ответ",
+      complete: "Завершить уровень",
+      completed: "Уровень пройден"
+    },
+    profile: { title: "Профиль", status: "Статус", done: "Пройдено" }
   },
   en: {
-    nav: { home: "Home", shop: "Shop", quest: "Quest", profile: "Profile" },
-    subtitle: "Quest and shopping by “Kalyk shynyk”",
-    home: {
-      title: "Welcome to the Shopping Bank",
-      text: "Buy now or complete the quest to get rewards for free.",
-      buy: "Buy product",
-      startQuest: "Start quest"
-    },
-    shop: {
-      title: "Catalog",
-      freeHint: "or get it free via quest",
-      buy: "Buy",
-      payTitle: "Payment",
-      payDesc: "If you skip the quest, choose a payment provider.",
-      sber: "Pay with SberPay",
-      vtb: "Pay with VTB Pay"
-    },
+    nav: { home: "Home", quest: "Quest", profile: "Profile" },
+    subtitle: "Step-by-step 5-level quest",
+    home: { title: "Start the quest", cta: "Open quest" },
     quest: {
       title: "Quest",
-      scan: "Scan QR",
-      stopScan: "Stop scanner",
-      upload: "Upload photo/video",
-      complete: "Mark level complete",
-      question: "What does this sign symbolize?",
-      option1: "Family protection",
-      option2: "Path and movement",
-      option3: "Sun and warmth"
-    },
-    profile: {
-      title: "Profile",
-      lang: "Language",
       progress: "Progress",
-      reward: "Reward"
-    }
+      prev: "Previous",
+      next: "Next level",
+      upload: "Upload file",
+      answer: "Answer",
+      complete: "Complete level",
+      completed: "Level completed"
+    },
+    profile: { title: "Profile", status: "Status", done: "Completed" }
   },
   mar: {
-    nav: { home: "Тӱшка", shop: "Каталог", quest: "Квест", profile: "Профиль" },
-    subtitle: "«Калык шынык» марте кевыт дене квест",
-    home: {
-      title: "«Банк покупок» лийже",
-      text: "Товарым налы, але квестым эртен налме пӱлем ончык.",
-      buy: "Товарым налы",
-      startQuest: "Квестым тӱҥал"
-    },
-    shop: {
-      title: "Каталог",
-      freeHint: "але квест гоч акысыз налаш лиеш",
-      buy: "Налаш",
-      payTitle: "Тӱлым",
-      payDesc: "Квестым ок эртен гын, тӱлым сервисым ойыр.",
-      sber: "SberPay дене тӱлаш",
-      vtb: "VTB Pay дене тӱлаш"
-    },
+    nav: { home: "Тӱшка", quest: "Квест", profile: "Профиль" },
+    subtitle: "5 тӱшкаан квест",
+    home: { title: "Квестым тӱҥал", cta: "Квестыш куснаш" },
     quest: {
       title: "Квест",
-      scan: "QR сканироватлаш",
-      stopScan: "Сканерым чарнаш",
-      upload: "Фото/видеом колташ",
-      complete: "Этап эртен манаш",
-      question: "Тиде тамга могай ойлым ончыктыш?",
-      option1: "Еш аралымаш",
-      option2: "Корно да кыймыл",
-      option3: "Кече да шокшо"
-    },
-    profile: {
-      title: "Профиль",
-      lang: "Йылме",
       progress: "Прогресс",
-      reward: "Награда"
-    }
+      prev: "Ончыч",
+      next: "Укеже тӱшка",
+      upload: "Файлым колташ",
+      answer: "Вашмут",
+      complete: "Тӱшкам пытарыш",
+      completed: "Тӱшка эртен"
+    },
+    profile: { title: "Профиль", status: "Шагал", done: "Эртен" }
   }
 };
 
 const state = {
-  page: "home",
   lang: localStorage.getItem("lang") || "ru",
-  completedLevels: JSON.parse(localStorage.getItem("completedLevels") || "[]"),
-  uploads: JSON.parse(localStorage.getItem("uploads") || "{}"),
-  qrResult: localStorage.getItem("qrResult") || "",
-  paymentProvider: localStorage.getItem("paymentProvider") || ""
+  page: "home",
+  userId: localStorage.getItem("userId") || `user_${Math.random().toString(36).slice(2, 10)}`,
+  currentLevel: 1,
+  completedLevels: [],
+  submissions: {}
 };
 
-const products = [
-  { id: 1, name: "Сумка Калык", price: 1290 },
-  { id: 2, name: "Игрушка-оберег", price: 790 },
-  { id: 3, name: "Украшение орнамент", price: 1490 }
-];
+localStorage.setItem("userId", state.userId);
 
 const pageContent = document.getElementById("pageContent");
 const navButtons = Array.from(document.querySelectorAll(".nav button"));
 const langButtons = Array.from(document.querySelectorAll(".lang-switch button"));
 
-let qrScanner;
-
-function t() {
+function tr() {
   return translations[state.lang];
 }
 
-function persist() {
-  localStorage.setItem("lang", state.lang);
-  localStorage.setItem("completedLevels", JSON.stringify(state.completedLevels));
-  localStorage.setItem("uploads", JSON.stringify(state.uploads));
-  localStorage.setItem("qrResult", state.qrResult);
-  localStorage.setItem("paymentProvider", state.paymentProvider);
+async function api(path, method = "GET", body) {
+  const res = await fetch(path, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) throw new Error("API error");
+  return res.json();
+}
+
+async function loadProgress() {
+  try {
+    const data = await api(`/api/progress/${state.userId}`);
+    state.currentLevel = data.currentLevel || 1;
+    state.completedLevels = data.completedLevels || [];
+    state.submissions = data.submissions || {};
+  } catch (e) {
+    console.warn("Не удалось загрузить прогресс", e);
+  }
+}
+
+async function saveProgress() {
+  try {
+    await api(`/api/progress/${state.userId}`, "POST", {
+      currentLevel: state.currentLevel,
+      completedLevels: state.completedLevels,
+      submissions: state.submissions
+    });
+  } catch (e) {
+    console.warn("Не удалось сохранить прогресс", e);
+  }
 }
 
 function setPage(page) {
@@ -190,235 +146,137 @@ function setPage(page) {
   render();
 }
 
-function toggleComplete(level) {
-  const index = state.completedLevels.indexOf(level);
-  if (index >= 0) {
-    state.completedLevels.splice(index, 1);
-  } else {
-    state.completedLevels.push(level);
-  }
-  persist();
+function setLang(lang) {
+  state.lang = lang;
+  localStorage.setItem("lang", lang);
   render();
 }
 
-function setPayment(provider) {
-  state.paymentProvider = provider;
-  persist();
-  alert(`${provider} выбран. Здесь подключается API оплаты.`);
-}
-
-function calculateReward() {
-  const done = state.completedLevels.length;
-  if (done === 5) return questScenario.reward[Math.floor(Math.random() * 2)];
-  if (done >= 3) return questScenario.reward[2];
-  return questScenario.reward[3];
-}
-
 function renderHome() {
-  const tr = t();
   return `
     <section class="card hero">
-      <h2>${tr.home.title}</h2>
-      <p>${tr.home.text}</p>
-      <div class="hero-buttons">
-        <button data-go-shop>${tr.home.buy}</button>
-        <button class="secondary" data-go-quest>${tr.home.startQuest}</button>
-      </div>
-    </section>
-  `;
-}
-
-function renderShop() {
-  const tr = t();
-  const items = products
-    .map(
-      (p) => `
-      <article class="product">
-        <h3>${p.name}</h3>
-        <p>${p.price} ₽</p>
-        <span class="badge">${tr.shop.freeHint}</span>
-        <div style="margin-top:10px"><button data-buy="${p.id}">${tr.shop.buy}</button></div>
-      </article>`
-    )
-    .join("");
-
-  return `
-    <section class="card">
-      <h2>${tr.shop.title}</h2>
-      <div class="products">${items}</div>
-    </section>
-
-    <section class="card">
-      <h3>${tr.shop.payTitle}</h3>
-      <p>${tr.shop.payDesc}</p>
-      <div class="inline">
-        <button data-pay="SberPay">${tr.shop.sber}</button>
-        <button class="secondary" data-pay="VTB Pay">${tr.shop.vtb}</button>
-      </div>
-      ${state.paymentProvider ? `<p class="upload-preview">Выбрано: ${state.paymentProvider}</p>` : ""}
+      <h2>${tr().home.title}</h2>
+      <button data-open-quest>${tr().home.cta}</button>
     </section>
   `;
 }
 
 function renderQuest() {
-  const tr = t();
-  const progress = Math.round((state.completedLevels.length / questScenario.levels.length) * 100);
-  const levels = questScenario.levels
-    .map((level) => {
-      const checked = state.completedLevels.includes(level.level);
-      const uploadName = state.uploads[level.level] || "";
-      const questionBlock =
-        level.level === 2
-          ? `
-      <label>${tr.quest.question}
-        <select data-answer="${level.level}">
-          <option>${tr.quest.option1}</option>
-          <option>${tr.quest.option2}</option>
-          <option>${tr.quest.option3}</option>
-        </select>
-      </label>`
-          : "";
-
-      return `
-      <article class="level-card">
-        <h3>${level.level}. ${level.name}</h3>
-        <p><strong>${level.description}</strong></p>
-        <p>${level.task}</p>
-        <p>Подтверждение: ${level.proof}</p>
-        ${questionBlock}
-        <div class="inline">
-          <label>
-            ${tr.quest.upload}
-            <input type="file" data-upload="${level.level}" ${level.level === 3 ? 'accept="video/*"' : 'accept="image/*,video/*"'}>
-          </label>
-          <button data-complete="${level.level}">${tr.quest.complete}</button>
-        </div>
-        ${uploadName ? `<p class="upload-preview">Файл: ${uploadName}</p>` : ""}
-        <p class="upload-preview">${checked ? "✅ Уровень отмечен как пройденный" : "⏳ Уровень в процессе"}</p>
-      </article>`;
-    })
-    .join("");
+  const level = questScenario.levels[state.currentLevel - 1];
+  const progressText = `${state.completedLevels.length}/5`;
+  const progressPercent = (state.completedLevels.length / 5) * 100;
+  const existing = state.submissions[level.level] || {};
 
   return `
     <section class="card">
-      <h2>${tr.quest.title}</h2>
-      <p>Прогресс: ${state.completedLevels.length}/${questScenario.levels.length}</p>
-      <div class="progress-wrap"><div class="progress" style="width:${progress}%"></div></div>
-      <div class="inline" style="margin-top: 10px">
-        <button data-start-qr>${tr.quest.scan}</button>
-        <button class="secondary" data-stop-qr>${tr.quest.stopScan}</button>
-      </div>
-      <div id="reader"></div>
-      ${state.qrResult ? `<p class="upload-preview">QR: ${state.qrResult}</p>` : ""}
+      <h2>${tr().quest.title}</h2>
+      <p><strong>${tr().quest.progress}:</strong> ${progressText}</p>
+      <div class="progress-wrap"><div class="progress" style="width:${progressPercent}%"></div></div>
     </section>
-    ${levels}
+
+    <section class="card level-card">
+      <span class="badge">${level.level}/5</span>
+      <h3>${level.name}</h3>
+      <p>${level.task}</p>
+      <p><strong>Подтверждение:</strong> ${level.proof}</p>
+
+      <label>${tr().quest.upload}
+        <input type="file" data-upload="${level.level}" ${level.level === 3 ? 'accept="video/*"' : 'accept="image/*"'}>
+      </label>
+      ${existing.fileName ? `<p class="upload-preview">Файл: ${existing.fileName}</p>` : ""}
+
+      ${level.question ? `
+      <label>${level.question}
+        <select data-answer>
+          ${level.options.map((o) => `<option ${existing.answer === o ? "selected" : ""}>${o}</option>`).join("")}
+        </select>
+      </label>
+      ` : ""}
+
+      <div class="inline" style="margin-top: 10px;">
+        <button class="secondary" data-prev ${state.currentLevel === 1 ? "disabled" : ""}>${tr().quest.prev}</button>
+        <button data-complete>${tr().quest.complete}</button>
+        <button data-next ${state.currentLevel === 5 ? "disabled" : ""}>${tr().quest.next}</button>
+      </div>
+      ${state.completedLevels.includes(level.level) ? `<p class="upload-preview">✅ ${tr().quest.completed}</p>` : ""}
+    </section>
   `;
 }
 
 function renderProfile() {
-  const tr = t();
-  const reward = calculateReward();
   return `
     <section class="card">
-      <h2>${tr.profile.title}</h2>
-      <p>${tr.profile.lang}: <strong>${state.lang.toUpperCase()}</strong></p>
-      <p>${tr.profile.progress}: <strong>${state.completedLevels.length}/5</strong></p>
-      <p>${tr.profile.reward}: <strong>${reward}</strong></p>
+      <h2>${tr().profile.title}</h2>
+      <p>ID: <strong>${state.userId}</strong></p>
+      <p>${tr().profile.done}: <strong>${state.completedLevels.length}/5</strong></p>
+      <p>${tr().profile.status}: <strong>${state.completedLevels.length === 5 ? "Финиш" : "В процессе"}</strong></p>
     </section>
   `;
 }
 
 function bindEvents() {
-  document.querySelector("[data-go-shop]")?.addEventListener("click", () => setPage("shop"));
-  document.querySelector("[data-go-quest]")?.addEventListener("click", () => setPage("quest"));
+  document.querySelector("[data-open-quest]")?.addEventListener("click", () => setPage("quest"));
 
-  document.querySelectorAll("[data-pay]").forEach((el) => {
-    el.addEventListener("click", () => setPayment(el.getAttribute("data-pay")));
+  document.querySelector("[data-upload]")?.addEventListener("change", async (e) => {
+    const file = e.target.files?.[0];
+    const level = state.currentLevel;
+    if (!file) return;
+    state.submissions[level] = { ...(state.submissions[level] || {}), fileName: file.name };
+    await saveProgress();
+    render();
   });
 
-  document.querySelectorAll("[data-upload]").forEach((input) => {
-    input.addEventListener("change", (e) => {
-      const level = e.target.getAttribute("data-upload");
-      const file = e.target.files?.[0];
-      if (file) {
-        state.uploads[level] = file.name;
-        persist();
-        render();
-      }
-    });
+  document.querySelector("[data-answer]")?.addEventListener("change", async (e) => {
+    const level = state.currentLevel;
+    state.submissions[level] = { ...(state.submissions[level] || {}), answer: e.target.value };
+    await saveProgress();
   });
 
-  document.querySelectorAll("[data-complete]").forEach((btn) => {
-    btn.addEventListener("click", () => toggleComplete(Number(btn.getAttribute("data-complete"))));
+  document.querySelector("[data-complete]")?.addEventListener("click", async () => {
+    const level = state.currentLevel;
+    if (!state.completedLevels.includes(level)) state.completedLevels.push(level);
+    if (level < 5) state.currentLevel = level + 1;
+    await saveProgress();
+    render();
   });
 
-  document.querySelector("[data-start-qr]")?.addEventListener("click", startQr);
-  document.querySelector("[data-stop-qr]")?.addEventListener("click", stopQr);
-}
+  document.querySelector("[data-prev]")?.addEventListener("click", async () => {
+    if (state.currentLevel > 1) state.currentLevel -= 1;
+    await saveProgress();
+    render();
+  });
 
-function startQr() {
-  if (!window.Html5Qrcode) {
-    alert("Библиотека QR недоступна. Проверь подключение к интернету.");
-    return;
-  }
-
-  if (!qrScanner) {
-    qrScanner = new Html5Qrcode("reader");
-  }
-
-  qrScanner
-    .start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: 220 },
-      (decodedText) => {
-        state.qrResult = decodedText;
-        persist();
-        render();
-        stopQr();
-      },
-      () => {}
-    )
-    .catch(() => {
-      alert("Не удалось запустить камеру.");
-    });
-}
-
-function stopQr() {
-  if (qrScanner?.isScanning) {
-    qrScanner.stop().catch(() => {});
-  }
+  document.querySelector("[data-next]")?.addEventListener("click", async () => {
+    if (state.currentLevel < 5) state.currentLevel += 1;
+    await saveProgress();
+    render();
+  });
 }
 
 function render() {
-  const tr = t();
+  const dict = tr();
   document.getElementById("brandTitle").textContent = questScenario.title;
-  document.getElementById("brandSubtitle").textContent = tr.subtitle;
+  document.getElementById("brandSubtitle").textContent = dict.subtitle;
 
   navButtons.forEach((button) => {
     const page = button.getAttribute("data-page");
-    button.textContent = tr.nav[page];
+    button.textContent = dict.nav[page] || page;
     button.classList.toggle("secondary", page !== state.page);
     button.onclick = () => setPage(page);
   });
 
   langButtons.forEach((button) => {
-    button.classList.toggle("secondary", button.getAttribute("data-lang") !== state.lang);
-    button.onclick = () => {
-      state.lang = button.getAttribute("data-lang");
-      persist();
-      render();
-    };
+    const lang = button.getAttribute("data-lang");
+    button.classList.toggle("secondary", lang !== state.lang);
+    button.onclick = () => setLang(lang);
   });
 
-  const pages = {
-    home: renderHome,
-    shop: renderShop,
-    quest: renderQuest,
-    profile: renderProfile
-  };
-
+  const pages = { home: renderHome, quest: renderQuest, profile: renderProfile };
   pageContent.innerHTML = pages[state.page]();
   bindEvents();
 }
 
-render();
+(async function init() {
+  await loadProgress();
+  render();
+})();
