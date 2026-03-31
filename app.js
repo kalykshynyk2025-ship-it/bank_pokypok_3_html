@@ -1,12 +1,7 @@
 const questScenario = {
   title: "Банк покупок",
   levels: [
-    {
-      level: 1,
-      name: "Уровень 1: Зелёный объект",
-      task: "Сделай фото зелёного объекта.",
-      proof: "Фото"
-    },
+    { level: 1, name: "Уровень 1: Зелёный объект", task: "Сделай фото зелёного объекта.", proof: "Фото" },
     {
       level: 2,
       name: "Уровень 2: Орнамент",
@@ -15,18 +10,8 @@ const questScenario = {
       question: "Что символизирует орнамент?",
       options: ["Защиту", "Путь", "Солнце"]
     },
-    {
-      level: 3,
-      name: "Уровень 3: Видео в магазине",
-      task: "Сними короткое видео в магазине.",
-      proof: "Видео"
-    },
-    {
-      level: 4,
-      name: "Уровень 4: Фото с человеком",
-      task: "Сделай фото с другим человеком.",
-      proof: "Фото"
-    },
+    { level: 3, name: "Уровень 3: Видео в магазине", task: "Сними короткое видео в магазине.", proof: "Видео" },
+    { level: 4, name: "Уровень 4: Фото с человеком", task: "Сделай фото с другим человеком.", proof: "Фото" },
     {
       level: 5,
       name: "Уровень 5: Финальный вопрос",
@@ -49,9 +34,13 @@ const translations = {
       prev: "Назад",
       next: "Следующий уровень",
       upload: "Загрузить файл",
-      answer: "Ответ",
       complete: "Завершить уровень",
-      completed: "Уровень пройден"
+      completed: "Уровень пройден",
+      scan: "Сканировать",
+      stopScan: "Остановить сканер",
+      qrHint: "QR должен содержать формат LEVEL-<номер>, например LEVEL-3",
+      denied: "Доступ к этому уровню пока закрыт",
+      opened: "Уровень открыт по QR"
     },
     profile: { title: "Профиль", status: "Статус", done: "Пройдено" }
   },
@@ -65,9 +54,13 @@ const translations = {
       prev: "Previous",
       next: "Next level",
       upload: "Upload file",
-      answer: "Answer",
       complete: "Complete level",
-      completed: "Level completed"
+      completed: "Level completed",
+      scan: "Scan",
+      stopScan: "Stop scanner",
+      qrHint: "QR format: LEVEL-<number>, e.g. LEVEL-3",
+      denied: "This level is locked",
+      opened: "Level opened by QR"
     },
     profile: { title: "Profile", status: "Status", done: "Completed" }
   },
@@ -81,9 +74,13 @@ const translations = {
       prev: "Ончыч",
       next: "Укеже тӱшка",
       upload: "Файлым колташ",
-      answer: "Вашмут",
       complete: "Тӱшкам пытарыш",
-      completed: "Тӱшка эртен"
+      completed: "Тӱшка эртен",
+      scan: "Сканироватлаш",
+      stopScan: "Сканерым чарнаш",
+      qrHint: "QR формат: LEVEL-<номер>",
+      denied: "Тиде тӱшка петыра",
+      opened: "QR дене тӱшка почылт"
     },
     profile: { title: "Профиль", status: "Шагал", done: "Эртен" }
   }
@@ -95,9 +92,11 @@ const state = {
   userId: localStorage.getItem("userId") || `user_${Math.random().toString(36).slice(2, 10)}`,
   currentLevel: 1,
   completedLevels: [],
-  submissions: {}
+  submissions: {},
+  qrMessage: ""
 };
 
+let qrScanner = null;
 localStorage.setItem("userId", state.userId);
 
 const pageContent = document.getElementById("pageContent");
@@ -106,6 +105,36 @@ const langButtons = Array.from(document.querySelectorAll(".lang-switch button"))
 
 function tr() {
   return translations[state.lang];
+}
+
+function getMaxAvailableLevel() {
+  return Math.min(5, state.completedLevels.length + 1);
+}
+
+function parseQrToLevel(qrText) {
+  const match = String(qrText || "").trim().match(/^LEVEL-(\d)$/i);
+  if (!match) return null;
+  const level = Number(match[1]);
+  return level >= 1 && level <= 5 ? level : null;
+}
+
+function openLevelFromQr(qrText) {
+  const targetLevel = parseQrToLevel(qrText);
+  if (!targetLevel) {
+    state.qrMessage = `QR: ${qrText} (неверный формат)`;
+    render();
+    return;
+  }
+
+  if (targetLevel > getMaxAvailableLevel()) {
+    state.qrMessage = `${tr().quest.denied}: LEVEL-${targetLevel}`;
+    render();
+    return;
+  }
+
+  state.currentLevel = targetLevel;
+  state.qrMessage = `${tr().quest.opened}: LEVEL-${targetLevel}`;
+  setPage("quest");
 }
 
 async function api(path, method = "GET", body) {
@@ -172,6 +201,13 @@ function renderQuest() {
       <h2>${tr().quest.title}</h2>
       <p><strong>${tr().quest.progress}:</strong> ${progressText}</p>
       <div class="progress-wrap"><div class="progress" style="width:${progressPercent}%"></div></div>
+      <div class="inline" style="margin-top:10px;">
+        <button data-scan>${tr().quest.scan}</button>
+        <button class="secondary" data-stop-scan>${tr().quest.stopScan}</button>
+      </div>
+      <p class="upload-preview">${tr().quest.qrHint}</p>
+      <div id="reader"></div>
+      ${state.qrMessage ? `<p class="upload-preview">${state.qrMessage}</p>` : ""}
     </section>
 
     <section class="card level-card">
@@ -214,8 +250,43 @@ function renderProfile() {
   `;
 }
 
+function startQrScanner() {
+  if (!window.Html5Qrcode) {
+    state.qrMessage = "QR библиотека недоступна";
+    render();
+    return;
+  }
+
+  if (!qrScanner) {
+    qrScanner = new Html5Qrcode("reader");
+  }
+
+  qrScanner
+    .start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 220 },
+      (decodedText) => {
+        openLevelFromQr(decodedText);
+        stopQrScanner();
+      },
+      () => {}
+    )
+    .catch(() => {
+      state.qrMessage = "Не удалось запустить камеру";
+      render();
+    });
+}
+
+function stopQrScanner() {
+  if (qrScanner?.isScanning) {
+    qrScanner.stop().catch(() => {});
+  }
+}
+
 function bindEvents() {
   document.querySelector("[data-open-quest]")?.addEventListener("click", () => setPage("quest"));
+  document.querySelector("[data-scan]")?.addEventListener("click", startQrScanner);
+  document.querySelector("[data-stop-scan]")?.addEventListener("click", stopQrScanner);
 
   document.querySelector("[data-upload]")?.addEventListener("change", async (e) => {
     const file = e.target.files?.[0];
@@ -247,7 +318,9 @@ function bindEvents() {
   });
 
   document.querySelector("[data-next]")?.addEventListener("click", async () => {
-    if (state.currentLevel < 5) state.currentLevel += 1;
+    if (state.currentLevel < 5 && state.currentLevel + 1 <= getMaxAvailableLevel()) {
+      state.currentLevel += 1;
+    }
     await saveProgress();
     render();
   });
